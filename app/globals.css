@@ -1,26 +1,273 @@
-@import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap");
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+/* ============================================
+   PUNTORED DEVELOPER PLATFORM — DESIGN SYSTEM
+   All colors use RGB numeric format.
+   ============================================ */
 
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    /* ---- Base RGB Scales ---- */
+
+    /* Neutral (13 steps) */
+    --neutral-1: 255 255 255;
+    --neutral-2: 253 253 253;
+    --neutral-3: 247 247 247;
+    --neutral-4: 243 243 243;
+    --neutral-5: 224 224 224;
+    --neutral-6: 204 204 204;
+    --neutral-7: 163 163 163;
+    --neutral-8: 122 122 122;
+    --neutral-9: 106 106 106;
+    --neutral-10: 82 82 82;
+    --neutral-11: 75 75 75;
+    --neutral-12: 67 67 67;
+    --neutral-13: 51 51 51;
+
+    /* Primary (10 steps) */
+    --primary-1: 246 247 251;
+    --primary-2: 236 238 244;
+    --primary-3: 210 214 228;
+    --primary-4: 175 182 207;
+    --primary-5: 138 148 184;
+    --primary-6: 69 85 143;
+    --primary-7: 59 72 122;
+    --primary-8: 49 60 102;
+    --primary-9: 39 48 82;
+    --primary-10: 31 38 64;
+
+    /* Secondary (10 steps) */
+    --secondary-1: 252 231 242;
+    --secondary-2: 248 198 224;
+    --secondary-3: 243 153 200;
+    --secondary-4: 237 106 174;
+    --secondary-5: 232 61 149;
+    --secondary-6: 227 18 126;
+    --secondary-7: 193 15 107;
+    --secondary-8: 161 13 89;
+    --secondary-9: 129 10 72;
+    --secondary-10: 102 8 57;
+
+    /* Success (3 steps) */
+    --success-1: 230 245 241;
+    --success-2: 147 211 194;
+    --success-3: 3 129 95;
+
+    /* Error (3 steps) */
+    --error-1: 250 235 236;
+    --error-2: 235 168 171;
+    --error-3: 209 52 60;
+
+    /* Information (3 steps) */
+    --information-1: 230 240 251;
+    --information-2: 194 218 246;
+    --information-3: 0 102 219;
+
+    /* ---- Semantic Tokens — Layout ---- */
+    --background: var(--neutral-1);
+    --foreground: var(--neutral-13);
+    --card: var(--neutral-1);
+    --card-foreground: var(--neutral-13);
+    --muted: var(--neutral-3);
+    --muted-foreground: var(--neutral-9);
+    --border: var(--neutral-5);
+    --input: var(--neutral-5);
+    --popover: var(--neutral-2);
+    --popover-foreground: var(--neutral-13);
+    --accent: var(--neutral-4);
+    --accent-foreground: var(--neutral-13);
+
+    /* ---- Semantic Tokens — Primary actions (uses secondary scale) ---- */
+    --primary: var(--secondary-6);
+    --primary-foreground: 255 255 255;
+    --primary-hover: var(--secondary-7);
+    --primary-active: var(--secondary-8);
+    --primary-subtle: var(--secondary-2);
+    --primary-muted-color: var(--secondary-3);
+    --primary-strong: var(--secondary-9);
+
+    /* ---- Semantic Tokens — Secondary actions (uses primary scale) ---- */
+    --secondary: var(--primary-6);
+    --secondary-foreground: 255 255 255;
+    --secondary-hover: var(--primary-7);
+    --secondary-active: var(--primary-8);
+    --secondary-subtle: var(--primary-2);
+    --secondary-muted-color: var(--primary-3);
+    --secondary-strong: var(--primary-9);
+
+    /* ---- Semantic Tokens — Status ---- */
+    --success: var(--success-3);
+    --success-foreground: 255 255 255;
+    --success-subtle: var(--success-1);
+    --success-muted: var(--success-2);
+
+    --destructive: var(--error-3);
+    --destructive-foreground: 255 255 255;
+    --destructive-subtle: var(--error-1);
+    --destructive-muted: var(--error-2);
+
+    --info: var(--information-3);
+    --info-foreground: 255 255 255;
+    --info-subtle: var(--information-1);
+    --info-muted: var(--information-2);
+
+    /* ---- Infrastructure ---- */
+    --ring: var(--primary-6);
+    --radius: 0.375rem;
+    --hero-bg: var(--primary-10);
+
+    /* ---- Sidebar ---- */
+    --sidebar-background: var(--neutral-2);
+    --sidebar-foreground: var(--neutral-13);
+    --sidebar-primary: var(--primary-6);
+    --sidebar-primary-foreground: 255 255 255;
+    --sidebar-accent: var(--neutral-4);
+    --sidebar-accent-foreground: var(--neutral-13);
+    --sidebar-border: var(--neutral-5);
+    --sidebar-ring: var(--primary-5);
+
+    /* ---- Charts ---- */
+    --chart-1: var(--primary-6);
+    --chart-2: var(--secondary-6);
+    --chart-3: var(--success-3);
+    --chart-4: var(--information-3);
+    --chart-5: var(--neutral-8);
+
+    /* ---- Fonts ---- */
+    --font-sans: Verdana, Geneva, Tahoma, sans-serif;
+    --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+    --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco,
+      Consolas, "Liberation Mono", "Courier New", monospace;
+
+    /* ---- Shadows ---- */
+    --shadow-2xs: 0 1px 3px 0px rgb(0 0 0 / 0.05);
+    --shadow-xs: 0 1px 3px 0px rgb(0 0 0 / 0.05);
+    --shadow-sm: 0 1px 3px 0px rgb(0 0 0 / 0.1),
+      0 1px 2px -1px rgb(0 0 0 / 0.1);
+    --shadow: 0 1px 3px 0px rgb(0 0 0 / 0.1),
+      0 1px 2px -1px rgb(0 0 0 / 0.1);
+    --shadow-md: 0 1px 3px 0px rgb(0 0 0 / 0.1),
+      0 2px 4px -1px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 1px 3px 0px rgb(0 0 0 / 0.1),
+      0 4px 6px -1px rgb(0 0 0 / 0.1);
+    --shadow-xl: 0 1px 3px 0px rgb(0 0 0 / 0.1),
+      0 8px 10px -1px rgb(0 0 0 / 0.1);
+    --shadow-2xl: 0 1px 3px 0px rgb(0 0 0 / 0.25);
+    --tracking-normal: 0em;
+    --spacing: 0.25rem;
+  }
+
+  .dark {
+    --background: var(--primary-10);
+    --foreground: var(--neutral-2);
+    --card: var(--primary-9);
+    --card-foreground: var(--neutral-2);
+    --popover: var(--primary-9);
+    --popover-foreground: var(--neutral-2);
+    --muted: var(--primary-8);
+    --muted-foreground: var(--neutral-7);
+    --accent: var(--primary-8);
+    --accent-foreground: var(--neutral-2);
+    --border: 255 255 255 / 10%;
+    --input: 255 255 255 / 15%;
+    --ring: var(--primary-5);
+    --sidebar-background: var(--primary-10);
+    --sidebar-foreground: var(--neutral-2);
+    --sidebar-primary: var(--primary-5);
+    --sidebar-primary-foreground: 255 255 255;
+    --sidebar-accent: var(--primary-8);
+    --sidebar-accent-foreground: var(--neutral-2);
+    --sidebar-border: 255 255 255 / 10%;
+    --sidebar-ring: var(--primary-5);
+    --chart-1: var(--primary-5);
+    --chart-2: var(--secondary-4);
+    --chart-3: var(--success-2);
+    --chart-4: var(--information-2);
+    --chart-5: var(--neutral-7);
+    --shadow-2xs: 0 1px 3px 0px rgb(0 0 0 / 0.05);
+    --shadow-xs: 0 1px 3px 0px rgb(0 0 0 / 0.05);
+    --shadow-sm: 0 1px 3px 0px rgb(0 0 0 / 0.1),
+      0 1px 2px -1px rgb(0 0 0 / 0.1);
+    --shadow: 0 1px 3px 0px rgb(0 0 0 / 0.1),
+      0 1px 2px -1px rgb(0 0 0 / 0.1);
+    --shadow-md: 0 1px 3px 0px rgb(0 0 0 / 0.1),
+      0 2px 4px -1px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 1px 3px 0px rgb(0 0 0 / 0.1),
+      0 4px 6px -1px rgb(0 0 0 / 0.1);
+    --shadow-xl: 0 1px 3px 0px rgb(0 0 0 / 0.1),
+      0 8px 10px -1px rgb(0 0 0 / 0.1);
+    --shadow-2xl: 0 1px 3px 0px rgb(0 0 0 / 0.25);
+    --font-sans: Verdana, Geneva, Tahoma, sans-serif;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+  }
+
+  code,
+  pre,
+  .font-mono {
+    font-family: "JetBrains Mono", "Fira Code", "Cascadia Code", Consolas,
+      monospace;
+  }
 }
+
+/* ---- Custom scrollbar for code panels ---- */
+.code-scroll::-webkit-scrollbar {
+  height: 4px;
+  width: 4px;
+}
+.code-scroll::-webkit-scrollbar-track {
+  background: rgb(var(--hero-bg));
+}
+.code-scroll::-webkit-scrollbar-thumb {
+  background: rgb(var(--primary) / 0.5);
+  border-radius: 2px;
+}
+
+/* ---- Syntax highlight tokens ---- */
+.token-keyword {
+  color: rgb(var(--secondary));
+}
+.token-string {
+  color: rgb(var(--primary-3));
+}
+.token-comment {
+  color: rgb(var(--neutral-7));
+}
+.token-number {
+  color: rgb(var(--information-3));
+}
+.token-key {
+  color: rgb(var(--primary-4));
+}
+.token-value {
+  color: rgb(var(--secondary-3));
+}
+
+/* ---- Fade-in animation ---- */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out;
+}
+

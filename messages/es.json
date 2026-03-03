@@ -1,0 +1,88 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "products": "Productos",
+    "gettingStarted": "Comenzar",
+    "changelog": "Versiones",
+    "contactCta": "Solicitar información"
+  },
+  "index": {
+    "hero": {
+      "badge": "Developer Platform · v2.0",
+      "title": "Bienvenido a Puntored",
+      "highlight": "Developer Center",
+      "subtitle": "APIs para pagos, recargas, cash-in/out y datos de consumo. 35+ países, un solo punto de integración.",
+      "primaryCta": "Comenzar a integrar",
+      "secondaryCta": "Ver productos",
+      "secondaryCtaExplore": "Comienza tu integración"
+    },
+    "stats": {
+      "countries": {
+        "value": "35+",
+        "label": "Países LATAM"
+      },
+      "products": {
+        "value": "+30K",
+        "label": "Productos disponibles"
+      },
+      "services": {
+        "value": "+35K",
+        "label": "Servicios activos"
+      },
+      "categories": {
+        "value": "3",
+        "label": "Categorías de API"
+      }
+    },
+    "capabilities": {
+      "title": "Capacidades de la plataforma",
+      "description": "Tres categorías de API que cubren el ciclo completo de servicios financieros para tu negocio en LATAM.",
+      "prepaid": {
+        "title": "Prepaid & Content",
+        "description": "Recargas móviles, paquetes de datos, voz y SMS. Pines de contenido para streaming, gaming y licencias de software."
+      },
+      "payments": {
+        "title": "Payments & Banking",
+        "description": "Pago de servicios públicos y privados, cash-in/cash-out de entidades bancarias, consultas de cuenta y estado."
+      },
+      "data": {
+        "title": "Data Intelligence",
+        "description": "Análisis transaccional básico y avanzado, historial por categoría, actividad de usuario y perfil de consumidor."
+      },
+      "endpointsLabel": "endpoints",
+      "explore": "Explorar"
+    },
+    "steps": {
+      "title": "Cómo funciona",
+      "subtitle": "Pasos para integrar y lanzar tu servicio financiero",
+      "items": {
+        "1": {
+          "title": "Elige tu país y producto",
+          "description": "Selecciona entre 35+ países de LATAM y los productos que necesitas integrar."
+        },
+        "2": {
+          "title": "Integra y lanza",
+          "description": "Usa nuestra documentación task-based y colecciones Postman para ir a producción."
+        }
+      },
+      "primaryCta": "Comienza tu integración"
+    },
+    "why": {
+      "items": {
+        "latam": {
+          "title": "35+ países",
+          "description": "Cobertura LATAM unificada en un solo punto de integración"
+        },
+        "timeToMarket": {
+          "title": "Time-to-market rápido",
+          "description": "SDKs, colecciones Postman y docs task-based listos para usar"
+        },
+        "security": {
+          "title": "Seguridad financiera",
+          "description": "Autenticación OAuth 2.0, cifrado en tránsito y auditoría de transacciones"
+        }
+      }
+    }
+  }
+}
+
