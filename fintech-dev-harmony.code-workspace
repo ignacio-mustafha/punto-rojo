@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "../fintech-dev-harmony"
+		},
+		{
+			"path": "../redpoint"
+		},
+		{
+			"path": "."
+		}
+	]
+}

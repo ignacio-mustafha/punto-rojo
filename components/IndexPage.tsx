@@ -14,17 +14,9 @@ import {
 
 import { useTranslations } from "next-intl";
 
-import Header from "@/components/Header";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardFooter,
-} from "@/components/ui/card";
+import { Card, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
 
 const AUTH_CODE = `curl -X POST https://api.puntored.co/auth/token \\
   -H "Content-Type: application/json" \\
@@ -112,8 +104,6 @@ export default function IndexPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      <Header />
-
       <section className="bg-hero-bg">
         <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
           <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2">

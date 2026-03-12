@@ -2,11 +2,7 @@ import type { Config } from "tailwindcss";
 
 const config: Config = {
   darkMode: "class",
-  content: [
-    "./app/**/*.{ts,tsx}",
-    "./components/**/*.{ts,tsx}",
-    "./lib/**/*.{ts,tsx}",
-  ],
+  content: ["./app/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}", "./lib/**/*.{ts,tsx}"],
   prefix: "",
   theme: {
     container: {
@@ -80,11 +76,9 @@ const config: Config = {
           DEFAULT: "rgb(var(--sidebar-background) / <alpha-value>)",
           foreground: "rgb(var(--sidebar-foreground) / <alpha-value>)",
           primary: "rgb(var(--sidebar-primary) / <alpha-value>)",
-          "primary-foreground":
-            "rgb(var(--sidebar-primary-foreground) / <alpha-value>)",
+          "primary-foreground": "rgb(var(--sidebar-primary-foreground) / <alpha-value>)",
           accent: "rgb(var(--sidebar-accent) / <alpha-value>)",
-          "accent-foreground":
-            "rgb(var(--sidebar-accent-foreground) / <alpha-value>)",
+          "accent-foreground": "rgb(var(--sidebar-accent-foreground) / <alpha-value>)",
           border: "rgb(var(--sidebar-border) / <alpha-value>)",
           ring: "rgb(var(--sidebar-ring) / <alpha-value>)",
         },
@@ -122,14 +116,7 @@ const config: Config = {
       },
       fontFamily: {
         sans: ["Verdana", "Geneva", "Tahoma", "sans-serif"],
-        serif: [
-          "ui-serif",
-          "Georgia",
-          "Cambria",
-          "Times New Roman",
-          "Times",
-          "serif",
-        ],
+        serif: ["ui-serif", "Georgia", "Cambria", "Times New Roman", "Times", "serif"],
         mono: [
           "JetBrains Mono",
           "ui-monospace",
@@ -148,4 +135,3 @@ const config: Config = {
 };
 
 export default config;
-

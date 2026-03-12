@@ -140,22 +140,18 @@
     /* ---- Fonts ---- */
     --font-sans: Verdana, Geneva, Tahoma, sans-serif;
     --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
-    --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco,
-      Consolas, "Liberation Mono", "Courier New", monospace;
+    --font-mono:
+      "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+      "Courier New", monospace;
 
     /* ---- Shadows ---- */
     --shadow-2xs: 0 1px 3px 0px rgb(0 0 0 / 0.05);
     --shadow-xs: 0 1px 3px 0px rgb(0 0 0 / 0.05);
-    --shadow-sm: 0 1px 3px 0px rgb(0 0 0 / 0.1),
-      0 1px 2px -1px rgb(0 0 0 / 0.1);
-    --shadow: 0 1px 3px 0px rgb(0 0 0 / 0.1),
-      0 1px 2px -1px rgb(0 0 0 / 0.1);
-    --shadow-md: 0 1px 3px 0px rgb(0 0 0 / 0.1),
-      0 2px 4px -1px rgb(0 0 0 / 0.1);
-    --shadow-lg: 0 1px 3px 0px rgb(0 0 0 / 0.1),
-      0 4px 6px -1px rgb(0 0 0 / 0.1);
-    --shadow-xl: 0 1px 3px 0px rgb(0 0 0 / 0.1),
-      0 8px 10px -1px rgb(0 0 0 / 0.1);
+    --shadow-sm: 0 1px 3px 0px rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+    --shadow: 0 1px 3px 0px rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+    --shadow-md: 0 1px 3px 0px rgb(0 0 0 / 0.1), 0 2px 4px -1px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 1px 3px 0px rgb(0 0 0 / 0.1), 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    --shadow-xl: 0 1px 3px 0px rgb(0 0 0 / 0.1), 0 8px 10px -1px rgb(0 0 0 / 0.1);
     --shadow-2xl: 0 1px 3px 0px rgb(0 0 0 / 0.25);
     --tracking-normal: 0em;
     --spacing: 0.25rem;
@@ -190,16 +186,11 @@
     --chart-5: var(--neutral-7);
     --shadow-2xs: 0 1px 3px 0px rgb(0 0 0 / 0.05);
     --shadow-xs: 0 1px 3px 0px rgb(0 0 0 / 0.05);
-    --shadow-sm: 0 1px 3px 0px rgb(0 0 0 / 0.1),
-      0 1px 2px -1px rgb(0 0 0 / 0.1);
-    --shadow: 0 1px 3px 0px rgb(0 0 0 / 0.1),
-      0 1px 2px -1px rgb(0 0 0 / 0.1);
-    --shadow-md: 0 1px 3px 0px rgb(0 0 0 / 0.1),
-      0 2px 4px -1px rgb(0 0 0 / 0.1);
-    --shadow-lg: 0 1px 3px 0px rgb(0 0 0 / 0.1),
-      0 4px 6px -1px rgb(0 0 0 / 0.1);
-    --shadow-xl: 0 1px 3px 0px rgb(0 0 0 / 0.1),
-      0 8px 10px -1px rgb(0 0 0 / 0.1);
+    --shadow-sm: 0 1px 3px 0px rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+    --shadow: 0 1px 3px 0px rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+    --shadow-md: 0 1px 3px 0px rgb(0 0 0 / 0.1), 0 2px 4px -1px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 1px 3px 0px rgb(0 0 0 / 0.1), 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    --shadow-xl: 0 1px 3px 0px rgb(0 0 0 / 0.1), 0 8px 10px -1px rgb(0 0 0 / 0.1);
     --shadow-2xl: 0 1px 3px 0px rgb(0 0 0 / 0.25);
     --font-sans: Verdana, Geneva, Tahoma, sans-serif;
   }
@@ -213,13 +204,22 @@
   body {
     @apply bg-background text-foreground;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
+    filter: brightness(1);
+    transition:
+      background-color 700ms ease,
+      color 700ms ease,
+      border-color 700ms ease,
+      filter 700ms ease;
+  }
+
+  html.dark body {
+    filter: brightness(0.86);
   }
 
   code,
   pre,
   .font-mono {
-    font-family: "JetBrains Mono", "Fira Code", "Cascadia Code", Consolas,
-      monospace;
+    font-family: "JetBrains Mono", "Fira Code", "Cascadia Code", Consolas, monospace;
   }
 }
 
@@ -270,4 +270,3 @@
 .animate-fade-in {
   animation: fade-in 0.3s ease-out;
 }
-
