@@ -1,0 +1,33 @@
+{
+  "country": "CO",
+  "categories": [
+    {
+      "id": "prepaid",
+      "products": [
+        "recargas-moviles",
+        "paquetes-datos",
+        "pines-contenido",
+        "apuestas-deportivas"
+      ]
+    },
+    {
+      "id": "payments",
+      "products": [
+        "pago-servicios",
+        "cash-in",
+        "cash-out",
+        "consulta-cuenta"
+      ]
+    },
+    {
+      "id": "data",
+      "products": [
+        "data-basic",
+        "data-advanced",
+        "actividad-usuario",
+        "perfil-consumidor"
+      ]
+    }
+  ]
+}
+

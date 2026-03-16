@@ -1,0 +1,18 @@
+{
+  "country": "PA",
+  "categories": [
+    {
+      "id": "prepaid",
+      "products": ["recargas-moviles", "pines-contenido"]
+    },
+    {
+      "id": "payments",
+      "products": ["pago-servicios", "cash-in", "cash-out"]
+    },
+    {
+      "id": "data",
+      "products": []
+    }
+  ]
+}
+

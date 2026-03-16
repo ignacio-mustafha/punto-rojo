@@ -1,0 +1,18 @@
+{
+  "country": "PE",
+  "categories": [
+    {
+      "id": "prepaid",
+      "products": ["recargas-moviles", "paquetes-datos"]
+    },
+    {
+      "id": "payments",
+      "products": ["pago-servicios", "cash-in", "cash-out"]
+    },
+    {
+      "id": "data",
+      "products": ["data-basic"]
+    }
+  ]
+}
+

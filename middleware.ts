@@ -8,5 +8,6 @@ export default createMiddleware({
 });
 
 export const config = {
-  matcher: ["/((?!_next|.*\\..*).*)"],
+  // Exclude API routes from locale middleware so /api/* no redirections
+  matcher: ["/((?!api|_next|.*\\..*).*)"],
 };

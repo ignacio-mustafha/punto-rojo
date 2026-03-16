@@ -28,11 +28,25 @@ export function CountryProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
+    const search = window.location.search;
+    const params = new URLSearchParams(search);
+    const fromUrl = params.get("country")?.toUpperCase() as CountryCode | null;
+
+    const allCodes: CountryCode[] = ["CO", "MX", "PE", "AR", "CL", "EC", "GT", "PA"];
+    const isValidFromUrl = fromUrl && allCodes.includes(fromUrl);
+
+    if (isValidFromUrl) {
+      setCountryState(fromUrl as CountryCode);
+      return;
+    }
+
     const stored = window.localStorage.getItem(STORAGE_KEY);
     if (stored) {
       try {
         const parsed = JSON.parse(stored) as CountryCode;
-        setCountryState(parsed);
+        if (allCodes.includes(parsed)) {
+          setCountryState(parsed);
+        }
       } catch {
         // ignore invalid stored value
       }

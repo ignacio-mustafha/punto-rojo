@@ -1,0 +1,18 @@
+{
+  "country": "AR",
+  "categories": [
+    {
+      "id": "prepaid",
+      "products": ["recargas-moviles", "paquetes-datos", "pines-contenido"]
+    },
+    {
+      "id": "payments",
+      "products": ["pago-servicios", "cash-in"]
+    },
+    {
+      "id": "data",
+      "products": ["data-basic", "data-advanced"]
+    }
+  ]
+}
+

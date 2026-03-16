@@ -1,0 +1,18 @@
+{
+  "country": "CL",
+  "categories": [
+    {
+      "id": "prepaid",
+      "products": ["recargas-moviles", "paquetes-datos"]
+    },
+    {
+      "id": "payments",
+      "products": ["pago-servicios"]
+    },
+    {
+      "id": "data",
+      "products": ["data-basic"]
+    }
+  ]
+}
+

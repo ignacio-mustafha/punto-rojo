@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Globe, Menu, ChevronDown } from "lucide-react";
 import Image from "next/image";
 
@@ -18,7 +18,7 @@ import {
 import { Separator } from "@/components/ui/separator";
 import ContactFormDialog from "@/components/ContactFormDialog";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { useCountry } from "@/lib/country-context";
+import { useCountry, type CountryCode } from "@/lib/country-context";
 
 const COUNTRIES = [
   { code: "CO", flag: "🇨🇴", name: "Colombia" },
@@ -29,6 +29,11 @@ const COUNTRIES = [
   { code: "EC", flag: "🇪🇨", name: "Ecuador" },
   { code: "GT", flag: "🇬🇹", name: "Guatemala" },
   { code: "PA", flag: "🇵🇦", name: "Panamá" },
+] as const;
+
+const LOCALES = [
+  { code: "es", label: "ES" },
+  { code: "en", label: "EN" },
 ] as const;
 
 import { useState } from "react";
@@ -46,14 +51,75 @@ export default function Navbar() {
 
   const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const router = useRouter();
 
-  const isActive = (path: string) =>
-    path === "/" ? pathname === "/" : pathname?.startsWith(path);
+  const segments = pathname?.split("/").filter(Boolean) ?? [];
+  const locale = (segments[0] as string | undefined) || "es";
+
+  const buildPath = (path: string) => {
+    const base = path === "/" ? "" : path;
+    let url = `/${locale}${base}`;
+
+    // Propagamos siempre el país seleccionado en la query
+    const params = new URLSearchParams(searchParams?.toString() ?? "");
+    if (country) {
+      params.set("country", country);
+    }
+    const query = params.toString();
+    if (query) {
+      url += `?${query}`;
+    }
+
+    return url;
+  };
+
+  const isActive = (path: string) => {
+    const base = path === "/" ? "" : path;
+    const fullBase = `/${locale}${base}`;
+    return path === "/"
+      ? pathname === fullBase
+      : pathname?.startsWith(fullBase);
+  };
+
+  const handleCountryChange = (code: CountryCode) => {
+    setCountry(code);
+
+    if (!pathname) return;
+
+    const params = new URLSearchParams(searchParams?.toString() ?? "");
+    params.set("country", code);
+
+    const query = params.toString();
+    const nextUrl = query ? `${pathname}?${query}` : pathname;
+
+    router.push(nextUrl, { scroll: false });
+  };
+
+  const handleLocaleChange = (nextLocale: string) => {
+    if (!pathname) return;
+
+    const parts = pathname.split("/").filter(Boolean);
+    if (parts.length === 0) {
+      // Ruta raíz sin locale explícito
+      const query = searchParams?.toString() ?? "";
+      const nextPath = `/${nextLocale}`;
+      const nextUrl = query ? `${nextPath}?${query}` : nextPath;
+      router.push(nextUrl, { scroll: false });
+      return;
+    }
+
+    parts[0] = nextLocale;
+    const basePath = `/${parts.join("/")}`;
+    const query = searchParams?.toString() ?? "";
+    const nextUrl = query ? `${basePath}?${query}` : basePath;
+    router.push(nextUrl, { scroll: false });
+  };
 
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-card/95 backdrop-blur-sm">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <Link href="/" className="flex items-center gap-2.5 shrink-0">
+        <Link href={buildPath("/")} className="flex items-center gap-2.5 shrink-0">
           <Image src="/logo.svg" alt="Puntored Developer" width={120} height={42} />
           <span className="hidden text-sm font-semibold tracking-tight sm:block">
             <span className="text-primary">Developers</span>
@@ -64,7 +130,7 @@ export default function Navbar() {
           {NAV_ITEMS.map((item) => (
             <Link
               key={item.path}
-              href={item.path}
+              href={buildPath(item.path)}
               className={[
                 "rounded-md px-3 py-2 text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground",
                 isActive(item.path)
@@ -78,6 +144,37 @@ export default function Navbar() {
         </nav>
 
         <div className="flex items-center gap-2">
+          {/* Selector de idioma */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="outline"
+                size="sm"
+                className="hidden h-8 gap-1.5 border-border bg-muted px-2.5 text-xs text-muted-foreground hover:bg-accent sm:flex"
+              >
+                <span className="uppercase">{locale}</span>
+                <ChevronDown size={11} />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-24">
+              {LOCALES.map((l) => {
+                const isActiveLocale = l.code === locale;
+                return (
+                  <DropdownMenuItem
+                    key={l.code}
+                    onClick={() => handleLocaleChange(l.code)}
+                    className={`gap-2 text-xs ${
+                      isActiveLocale ? "text-primary font-semibold" : ""
+                    }`}
+                  >
+                    <span>{l.label}</span>
+                  </DropdownMenuItem>
+                );
+              })}
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          {/* Selector de país */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
@@ -96,7 +193,7 @@ export default function Navbar() {
                 return (
                   <DropdownMenuItem
                     key={c.code}
-                    onClick={() => setCountry(c.code)}
+                    onClick={() => handleCountryChange(c.code)}
                     className={`gap-2 text-xs ${
                       isActiveCountry ? "text-primary font-semibold" : ""
                     }`}
@@ -118,13 +215,6 @@ export default function Navbar() {
               </Button>
             }
           />
-          <Button
-            asChild
-            size="sm"
-            className="hidden h-8 bg-secondary text-secondary-foreground text-xs font-bold hover:bg-secondary-hover sm:flex"
-          >
-            <Link href="/getting-started">{t("gettingStarted")}</Link>
-          </Button>
 
           <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
             <SheetTrigger asChild>
@@ -137,7 +227,7 @@ export default function Navbar() {
                 {NAV_ITEMS.map((item) => (
                   <Link
                     key={item.path}
-                    href={item.path}
+                    href={buildPath(item.path)}
                     onClick={() => setMobileOpen(false)}
                     className={[
                       "rounded-md px-3 py-2.5 text-sm transition-colors",
@@ -175,15 +265,6 @@ export default function Navbar() {
                     </Button>
                   }
                 />
-                <Button
-                  asChild
-                  size="sm"
-                  className="h-8 bg-secondary text-secondary-foreground text-xs font-bold hover:bg-secondary-hover"
-                >
-                  <Link href="/getting-started" onClick={() => setMobileOpen(false)}>
-                    {t("gettingStarted")}
-                  </Link>
-                </Button>
               </div>
             </SheetContent>
           </Sheet>

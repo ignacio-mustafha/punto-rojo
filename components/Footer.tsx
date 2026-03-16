@@ -61,13 +61,6 @@ export default function Footer() {
               <br />
               35+ países. Un solo punto de integración.
             </p>
-            <div className="mt-4 flex items-center gap-2">
-              <Globe size={14} className="text-muted-foreground" />
-              <select className="bg-transparent text-xs text-muted-foreground border-none outline-none">
-                <option>Español</option>
-                <option>English</option>
-              </select>
-            </div>
           </div>
 
           {/* Links */}

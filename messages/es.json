@@ -6,6 +6,34 @@
     "changelog": "Versiones",
     "contactCta": "Solicitar información"
   },
+  "gettingStarted": {
+    "header": {
+      "badge": "Primeros pasos",
+      "title": "Guía de integración",
+      "subtitle": "Sigue estos pasos para configurar tu entorno e integrar Puntored APIs en tu aplicación."
+    },
+    "sidebar": {
+      "title": "Pasos del onboarding"
+    },
+    "progress": {
+      "label": "completados"
+    },
+    "completedBanner": {
+      "title": "🎉 ¡Onboarding completo!",
+      "subtitle": "Listo para producción"
+    },
+    "help": "¿Necesitas ayuda?",
+    "buttons": {
+      "markCompleted": "Marcar completado",
+      "undo": "Deshacer",
+      "prev": "← Anterior",
+      "next": "Siguiente →"
+    },
+    "sandbox": {
+      "badge": "Sandbox environment",
+      "description": "Transacciones de prueba — sin cargos reales"
+    }
+  },
   "index": {
     "hero": {
       "badge": "Developer Platform · v2.0",
@@ -85,4 +113,3 @@
     }
   }
 }
-

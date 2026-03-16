@@ -6,6 +6,34 @@
     "changelog": "Changelog",
     "contactCta": "Request Information"
   },
+  "gettingStarted": {
+    "header": {
+      "badge": "Getting started",
+      "title": "Integration guide",
+      "subtitle": "Follow these steps to set up your environment and integrate Puntored APIs into your application."
+    },
+    "sidebar": {
+      "title": "Onboarding steps"
+    },
+    "progress": {
+      "label": "completed"
+    },
+    "completedBanner": {
+      "title": "🎉 Onboarding complete!",
+      "subtitle": "Ready for production"
+    },
+    "help": "Need help?",
+    "buttons": {
+      "markCompleted": "Mark as completed",
+      "undo": "Undo",
+      "prev": "← Previous",
+      "next": "Next →"
+    },
+    "sandbox": {
+      "badge": "Sandbox environment",
+      "description": "Test transactions — no real charges"
+    }
+  },
   "index": {
     "hero": {
       "badge": "Developer Platform · v2.0",
