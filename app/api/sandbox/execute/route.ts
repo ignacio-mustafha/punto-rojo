@@ -18,12 +18,7 @@ export const POST = withErrorHandler(async (req: NextRequest) => {
   try {
     body = (await req.json()) as SandboxPayload;
   } catch {
-    throw new AppError(
-      "INVALID_PARAMS",
-      "Invalid JSON body for sandbox execute",
-      undefined,
-      400,
-    );
+    throw new AppError("INVALID_PARAMS", "Invalid JSON body for sandbox execute", undefined, 400);
   }
 
   const { method, endpoint, productId, bodyRaw, bodyFormat } = body;
@@ -33,7 +28,7 @@ export const POST = withErrorHandler(async (req: NextRequest) => {
       "INVALID_PARAMS",
       "Missing method or endpoint for sandbox execute",
       { method, endpoint },
-      400,
+      400
     );
   }
 
@@ -65,4 +60,3 @@ export const POST = withErrorHandler(async (req: NextRequest) => {
     mockResponse,
   });
 });
-

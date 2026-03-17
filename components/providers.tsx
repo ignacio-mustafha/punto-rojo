@@ -8,6 +8,7 @@ import { CountryProvider } from "@/lib/country-context";
 
 type Props = {
   children: ReactNode;
+  forcedTheme?: "light" | "dark";
 };
 
 const queryClient = new QueryClient({
@@ -19,10 +20,10 @@ const queryClient = new QueryClient({
   },
 });
 
-export function Providers({ children }: Props) {
+export function Providers({ children, forcedTheme }: Props) {
   return (
     <QueryClientProvider client={queryClient}>
-      <ThemeProvider>
+      <ThemeProvider forcedTheme={forcedTheme}>
         <CountryProvider>{children}</CountryProvider>
       </ThemeProvider>
     </QueryClientProvider>
