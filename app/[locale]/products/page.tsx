@@ -3,11 +3,14 @@ import ProductsPageContent from "@/components/ProductsPageContent";
 import { getProducts } from "@/lib/actions/products";
 import type { ProductsData, Product } from "@/lib/mocks/products.mock";
 import type { ProductDocResponse } from "@/lib/types/product-doc";
+import type { CountryCode } from "@/lib/country-context";
+import { applyCountryToDoc } from "@/lib/products/applyCountryToDoc";
 
 type Props = {
   params: Promise<{ locale: Locale }>;
   searchParams: Promise<{
     country?: string;
+    countries?: string;
     category?: string;
     product?: string;
   }>;
@@ -16,7 +19,32 @@ type Props = {
 export default async function ProductsPage({ params, searchParams }: Props) {
   const [{ locale }, sp] = await Promise.all([params, searchParams]);
 
-  const country = (sp.country ?? "CO").toUpperCase();
+  const allCodes: CountryCode[] = ["CO", "MX", "PE", "AR", "CL", "EC", "GT", "PA"];
+  const isCountryCode = (c: string): c is CountryCode =>
+    allCodes.includes(c as CountryCode);
+
+  const baseCountryCandidate = (sp.country ?? "CO").toUpperCase();
+  const country: CountryCode = isCountryCode(baseCountryCandidate)
+    ? baseCountryCandidate
+    : "CO";
+
+  const countriesParam = sp.countries;
+  let countries: CountryCode[] = [country];
+  if (countriesParam) {
+    const parsed = countriesParam
+      .split(",")
+      .map((s) => s.trim().toUpperCase())
+      .filter(Boolean)
+      .filter(isCountryCode);
+
+    const unique = [...new Set(parsed)];
+    if (unique.length > 0) {
+      const withoutBase = unique.filter((c) => c !== country);
+      countries = [country, ...withoutBase].slice(0, 2);
+    }
+  }
+
+  if (countries.length === 0) countries = [country];
   const categoryFromUrl = sp.category;
   const productFromUrl = sp.product;
 
@@ -74,12 +102,24 @@ export default async function ProductsPage({ params, searchParams }: Props) {
     }
   }
 
+  // Map for future “dual country” UI: currently it points to the same doc
+  // (the actual CO->target transformation will be added in the next step).
+  const docsByCountry = countries.reduce(
+    (acc, c) => {
+      acc[c] = doc ? applyCountryToDoc(doc, c) : null;
+      return acc;
+    },
+    {} as Record<CountryCode, ProductDocResponse | null>,
+  );
+
   return (
     <ProductsPageContent
       categories={categories}
       activeCategoryId={activeCategoryId}
       activeProductId={activeProductId}
       country={country}
+      countries={countries}
+      docByCountry={docsByCountry}
       locale={locale}
       doc={doc}
     />

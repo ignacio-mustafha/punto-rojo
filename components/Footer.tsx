@@ -48,12 +48,19 @@ export default function Footer() {
               <Image
                 src="/logo.svg"
                 alt="Puntored Developer"
-                className="h-7 w-auto object-contain"
+                className="h-7 w-auto object-contain block dark:hidden"
+                width={120}
+                height={28}
+              />
+              <Image
+                src="/logo-dark.svg"
+                alt="Puntored Developer"
+                className="h-7 w-auto object-contain hidden dark:block"
                 width={120}
                 height={28}
               />
               <span className="text-sm font-semibold text-muted-foreground">
-                <span className="text-primary">Developers</span>
+                <span className="text-muted-foreground">Developers</span>
               </span>
             </Link>
             <p className="mt-3 text-xs text-muted-foreground leading-relaxed">

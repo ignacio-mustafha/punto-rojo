@@ -17,8 +17,8 @@ type Props = {
 
 const ICON_MAP: Record<string, { icon: React.ComponentType<any>; bg: string; color: string }> = {
   prepaid: { icon: Smartphone, bg: "bg-primary/10", color: "text-primary" },
-  payments: { icon: CreditCard, bg: "bg-secondary/10", color: "text-secondary" },
-  data: { icon: BarChart3, bg: "bg-accent", color: "text-accent-foreground" },
+  payments: { icon: CreditCard, bg: "bg-primary/10", color: "text-primary" },
+  data: { icon: BarChart3, bg: "bg-primary/10", color: "text-primary" },
 };
 
 export default function ChangelogPage({ data }: Props) {
@@ -50,44 +50,64 @@ export default function ChangelogPage({ data }: Props) {
         </div>
       </div>
 
-      {/* Tabs bar */}
+      {/* Categorías: selector apilado en mobile (sin scroll), pestañas clásicas en desktop */}
       <div className="sticky top-16 z-40 border-b border-border bg-card">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl min-w-0 px-4 py-3 sm:px-6 sm:py-0 lg:px-8">
+          <p className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground sm:hidden">
+            Categoría de producto
+          </p>
           <Tabs value={activeId} onValueChange={setActiveId}>
-            <TabsList className="h-11 gap-1 rounded-none border-b-0 bg-transparent p-0">
-              {categories.map((cat) => (
-                <TabsTrigger
-                  key={cat.id}
-                  value={cat.id}
-                  className="rounded-none border-b-2 border-transparent px-4 py-2 text-xs font-semibold text-muted-foreground transition-colors data-[state=active]:border-primary data-[state=active]:text-primary data-[state=active]:shadow-none"
-                >
-                  {cat.name}
-                </TabsTrigger>
-              ))}
+            <TabsList className="flex h-auto w-full flex-col gap-1 rounded-xl border border-border/80 bg-muted/40 p-1.5 shadow-sm sm:h-11 sm:flex-row sm:items-stretch sm:justify-start sm:gap-1 sm:rounded-none sm:border-0 sm:border-transparent sm:bg-transparent sm:p-0 sm:shadow-none">
+              {categories.map((cat) => {
+                const meta = ICON_MAP[cat.id] ?? ICON_MAP.prepaid;
+                const CatIcon = meta.icon;
+                return (
+                  <TabsTrigger
+                    key={cat.id}
+                    value={cat.id}
+                    className="flex h-auto min-h-0 w-full items-center gap-3 rounded-lg border-2 border-transparent px-3 py-2 text-left text-sm font-semibold text-muted-foreground shadow-none transition-colors data-[state=active]:border-primary/40 data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm sm:h-11 sm:w-auto sm:justify-center sm:rounded-none sm:border-0 sm:border-b-2 sm:border-transparent sm:bg-transparent sm:shadow-none data-[state=active]:sm:border-b-primary data-[state=active]:sm:bg-transparent data-[state=active]:sm:shadow-none sm:px-4 sm:py-2 sm:text-xs"
+                  >
+                    <span
+                      className={`inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg sm:hidden ${meta.bg}`}
+                    >
+                      <CatIcon
+                        className={`h-4 w-4 ${meta.color}`}
+                        aria-hidden
+                      />
+                    </span>
+                    <span className="min-w-0 flex-1 truncate sm:flex-none">
+                      {cat.name}
+                    </span>
+                  </TabsTrigger>
+                );
+              })}
             </TabsList>
           </Tabs>
         </div>
       </div>
 
       {/* Version timeline */}
-      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+      <div className="mx-auto min-w-0 max-w-7xl px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
         {activeCategory && (
           <>
-            <div className="mb-6 flex items-center gap-3">
+            <div className="mb-5 flex min-w-0 items-center gap-3 sm:mb-6">
               <div
-                className={`inline-flex h-10 w-10 items-center justify-center rounded-xl ${iconMeta.bg}`}
+                className={`hidden sm:inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${iconMeta.bg}`}
               >
-                <Icon size={20} className={iconMeta.color} />
+                <Icon
+                  className={`h-5 w-5 ${iconMeta.color}`}
+                  aria-hidden
+                />
               </div>
-              <h2 className="text-xl font-bold text-foreground">
+              <h2 className="min-w-0 text-lg font-bold leading-snug text-foreground sm:text-xl">
                 {activeCategory.name}
               </h2>
             </div>
 
-            <div className="space-y-4 border-l-2 border-border pl-6 ml-5">
+            <div className="ml-2 space-y-4 border-l-2 border-border pl-4 sm:ml-5 sm:pl-6">
               {activeCategory.versions.map((entry) => (
                 <div key={entry.version} className="relative">
-                  <div className="absolute -left-[calc(1.5rem+5px)] top-6 h-2.5 w-2.5 rounded-full border-2 border-border bg-background" />
+                  <div className="absolute -left-[calc(1rem+5px)] top-6 h-2.5 w-2.5 rounded-full border-2 border-border bg-background sm:-left-[calc(1.5rem+5px)]" />
                   <VersionCard entry={entry} />
                 </div>
               ))}
@@ -119,14 +139,16 @@ function TagBadge({ tag }: { tag: VersionEntry["tag"] }) {
 
 function VersionCard({ entry }: { entry: VersionEntry }) {
   return (
-    <Card className="overflow-hidden">
-      <CardContent className="p-6">
-        <div className="mb-1 flex flex-wrap items-center gap-3">
-          <h3 className="text-lg font-bold text-foreground">{entry.version}</h3>
+    <Card className="min-w-0 overflow-hidden">
+      <CardContent className="p-4 sm:p-6">
+        <div className="mb-1 flex min-w-0 flex-wrap items-center gap-2 sm:gap-3">
+          <h3 className="min-w-0 break-words text-base font-bold text-foreground sm:text-lg">
+            {entry.version}
+          </h3>
           <TagBadge tag={entry.tag} />
           <span className="text-xs text-muted-foreground">{entry.date}</span>
         </div>
-        <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+        <p className="mt-2 break-words text-sm leading-relaxed text-muted-foreground">
           {entry.summary}
         </p>
 
@@ -145,13 +167,13 @@ function VersionCard({ entry }: { entry: VersionEntry }) {
                 {entry.improvements.map((item, i) => (
                   <li
                     key={i}
-                    className="flex items-start gap-2 text-xs leading-relaxed text-muted-foreground"
+                    className="flex min-w-0 items-start gap-2 text-xs leading-relaxed text-muted-foreground"
                   >
                     <CheckCircle2
                       size={12}
                       className="mt-0.5 shrink-0 text-primary"
                     />
-                    {item}
+                    <span className="min-w-0 break-words">{item}</span>
                   </li>
                 ))}
               </ul>
@@ -170,13 +192,13 @@ function VersionCard({ entry }: { entry: VersionEntry }) {
                 {entry.bugFixes.map((item, i) => (
                   <li
                     key={i}
-                    className="flex items-start gap-2 text-xs leading-relaxed text-muted-foreground"
+                    className="flex min-w-0 items-start gap-2 text-xs leading-relaxed text-muted-foreground"
                   >
                     <CheckCircle2
                       size={12}
                       className="mt-0.5 shrink-0 text-secondary"
                     />
-                    {item}
+                    <span className="min-w-0 break-words">{item}</span>
                   </li>
                 ))}
               </ul>
@@ -195,13 +217,13 @@ function VersionCard({ entry }: { entry: VersionEntry }) {
                 {entry.breakingChanges.map((item, i) => (
                   <li
                     key={i}
-                    className="flex items-start gap-2 text-xs leading-relaxed text-muted-foreground"
+                    className="flex min-w-0 items-start gap-2 text-xs leading-relaxed text-muted-foreground"
                   >
                     <AlertTriangle
                       size={12}
                       className="mt-0.5 shrink-0 text-destructive"
                     />
-                    {item}
+                    <span className="min-w-0 break-words">{item}</span>
                   </li>
                 ))}
               </ul>

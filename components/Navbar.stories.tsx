@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { NextIntlClientProvider } from "next-intl";
 import { AppRouterContext } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import type { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import { MobileMenuProvider } from "@/components/MobileMenuProvider";
 import Navbar from "./Navbar";
 
 const messages = {
@@ -37,7 +38,9 @@ export const Default: Story = {
   render: () => (
     <AppRouterContext.Provider value={mockRouter}>
       <NextIntlClientProvider locale="es" messages={messages}>
-        <Navbar />
+        <MobileMenuProvider>
+          <Navbar />
+        </MobileMenuProvider>
       </NextIntlClientProvider>
     </AppRouterContext.Provider>
   ),

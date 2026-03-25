@@ -17,6 +17,7 @@ import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 
 const AUTH_CODE = `curl -X POST https://api.puntored.co/auth/token \\
   -H "Content-Type: application/json" \\
@@ -44,8 +45,8 @@ export default function IndexPage() {
       title: t("capabilities.prepaid.title"),
       description: t("capabilities.prepaid.description"),
       endpoints: 12,
-      iconBg: "bg-primary/10",
-      iconColor: "text-primary",
+      iconBg: "bg-primary/10 border border-transparent dark:bg-background/20 dark:border-border/50",
+      iconColor: "text-primary dark:text-muted-foreground",
       path: "/products?tab=prepaid",
     },
     {
@@ -53,8 +54,8 @@ export default function IndexPage() {
       title: t("capabilities.payments.title"),
       description: t("capabilities.payments.description"),
       endpoints: 18,
-      iconBg: "bg-secondary/10",
-      iconColor: "text-secondary",
+      iconBg: "bg-secondary/10 border border-transparent dark:bg-background/20 dark:border-border/50",
+      iconColor: "text-secondary dark:text-muted-foreground",
       path: "/products?tab=payments",
     },
     {
@@ -62,8 +63,8 @@ export default function IndexPage() {
       title: t("capabilities.data.title"),
       description: t("capabilities.data.description"),
       endpoints: 8,
-      iconBg: "bg-accent",
-      iconColor: "text-accent-foreground",
+      iconBg: "bg-accent border border-transparent dark:bg-background/20 dark:border-border/50",
+      iconColor: "text-accent-foreground dark:text-muted-foreground",
       path: "/products?tab=data",
     },
   ] as const;
@@ -117,9 +118,11 @@ export default function IndexPage() {
               <h1 className="text-3xl font-bold leading-tight text-white sm:text-4xl lg:text-5xl">
                 {t("hero.title")}
                 <br />
-                <span className="text-[#e2127e]">{t("hero.highlight")}</span>
+                <span className="text-[#e2127e] dark:text-muted-foreground">
+                  {t("hero.highlight")}
+                </span>
               </h1>
-              <p className="mt-5 text-base leading-relaxed max-w-lg text-white">
+              <p className="mt-5 max-w-lg text-base leading-relaxed text-white dark:text-muted-foreground">
                 {t("hero.subtitle")}
               </p>
               <div className="mt-8 flex flex-wrap items-center gap-3">
@@ -146,10 +149,10 @@ export default function IndexPage() {
             <div className="hidden lg:block animate-fade-in">
               <div className="overflow-hidden rounded-2xl border border-primary/30 bg-hero-bg/80 shadow-primary-glow">
                 <div className="flex items-center gap-2 border-b border-border/20 bg-hero-bg px-4 py-3">
-                  <span className="h-3 w-3 rounded-full bg-destructive/60" />
-                  <span className="h-3 w-3 rounded-full bg-secondary/40" />
-                  <span className="h-3 w-3 rounded-full bg-primary-muted-color/60" />
-                  <span className="ml-2 text-xs text-muted-foreground">authentication.sh</span>
+                  <span className="h-3 w-3 rounded-full bg-destructive/70" />
+                  <span className="h-3 w-3 rounded-full bg-muted-foreground/45" />
+                  <span className="h-3 w-3 rounded-full bg-muted-foreground/30" />
+                  <span className="ml-2 text-xs text-foreground/80">authentication.sh</span>
                 </div>
                 <pre className="code-scroll overflow-x-auto p-5 text-xs leading-relaxed">
                   <code>
@@ -186,9 +189,9 @@ export default function IndexPage() {
 
       <section className="border-y border-border bg-card">
         <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 divide-x divide-y divide-border sm:grid-cols-4 sm:divide-y-0">
+          <div className="grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-4 sm:gap-0 sm:divide-x sm:divide-y-0 sm:divide-border">
             {stats.map((s) => (
-              <div key={s.label} className="px-6 py-4 text-center">
+              <div key={s.label} className="px-6 py-4 text-center sm:px-6">
                 <p className="text-2xl font-bold text-primary">{s.num}</p>
                 <p className="mt-1 text-xs text-muted-foreground">{s.label}</p>
               </div>
@@ -207,17 +210,20 @@ export default function IndexPage() {
           </p>
         </div>
 
-        <div className="flex gap-4 overflow-x-auto pb-4 sm:grid sm:grid-cols-3 sm:overflow-visible sm:pb-0">
+        <div className="flex flex-col gap-4 sm:grid sm:grid-cols-3 sm:gap-4">
           {capabilities.map((cap) => {
             const Icon = cap.icon;
             return (
               <Card
                 key={cap.title}
-                className="group min-w-72 flex flex-col transition-all hover:shadow-card-hover hover:-translate-y-0.5 sm:min-w-0"
+                className="group flex w-full flex-col border border-border/80 bg-card shadow-sm transition-all duration-200 hover:shadow-card-hover hover:-translate-y-0.5 dark:hover:shadow-sm dark:hover:translate-y-0 dark:hover:brightness-95 sm:min-w-0"
               >
                 <CardHeader className="pb-3">
                   <div
-                    className={`inline-flex h-11 w-11 items-center justify-center rounded-xl ${cap.iconBg} mb-3`}
+                    className={cn(
+                      "mb-3 inline-flex h-11 w-11 items-center justify-center rounded-xl",
+                      cap.iconBg,
+                    )}
                   >
                     <Icon size={22} className={cap.iconColor} />
                   </div>
@@ -227,13 +233,16 @@ export default function IndexPage() {
                   </CardDescription>
                 </CardHeader>
                 <CardFooter className="mt-auto flex items-center justify-between pt-0">
-                  <Badge variant="secondary" className="text-xs">
+                  <Badge
+                    variant="secondary"
+                    className="text-xs dark:bg-muted dark:text-foreground/90 dark:border dark:border-border/60"
+                  >
                     {cap.endpoints} {t("capabilities.endpointsLabel")}
                   </Badge>
                   <Button
                     asChild
                     variant="link"
-                    className="h-auto p-0 text-xs font-semibold text-primary group-hover:text-primary/80"
+                    className="h-auto p-0 text-xs font-semibold text-primary group-hover:text-primary/80 dark:text-muted-foreground dark:hover:text-foreground"
                   >
                     <Link href={cap.path} className="flex items-center gap-1">
                       {t("capabilities.explore")} <ChevronRight size={14} />

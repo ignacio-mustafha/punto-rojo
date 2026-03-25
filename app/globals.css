@@ -158,29 +158,45 @@
   }
 
   .dark {
-    --background: var(--primary-10);
-    --foreground: var(--neutral-2);
-    --card: var(--primary-9);
-    --card-foreground: var(--neutral-2);
-    --popover: var(--primary-9);
-    --popover-foreground: var(--neutral-2);
-    --muted: var(--primary-8);
-    --muted-foreground: var(--neutral-7);
-    --accent: var(--primary-8);
+    --background: 20 27 56;
+    --foreground: 245 247 255;
+    --card: 41 51 90;
+    --card-foreground: 245 247 255;
+    --popover: 41 51 90;
+    --popover-foreground: 245 247 255;
+    --muted: 49 60 102;
+    --muted-foreground: 197 205 230;
+    --accent: 49 60 102;
     --accent-foreground: var(--neutral-2);
-    --border: 255 255 255 / 10%;
-    --input: 255 255 255 / 15%;
-    --ring: var(--primary-5);
-    --sidebar-background: var(--primary-10);
+    --primary: 168 180 216;
+    --primary-foreground: 24 33 66;
+    --primary-hover: 185 196 227;
+    --primary-active: 141 154 194;
+    --primary-subtle: 64 77 123;
+    --primary-muted-color: 132 146 189;
+    --primary-strong: 196 207 236;
+    --secondary: var(--secondary-5);
+    --secondary-foreground: 255 255 255;
+    --secondary-hover: var(--secondary-6);
+    --secondary-active: var(--secondary-7);
+    --secondary-subtle: var(--secondary-2);
+    --secondary-muted-color: var(--secondary-3);
+    --secondary-strong: var(--secondary-8);
+    /* Keep token format compatible with Tailwind: these variables must be RGB triples. */
+    --border: var(--neutral-6);
+    --input: var(--neutral-6);
+    --ring: 196 207 236;
+    --hero-bg: 11 19 49;
+    --sidebar-background: 20 27 56;
     --sidebar-foreground: var(--neutral-2);
-    --sidebar-primary: var(--primary-5);
-    --sidebar-primary-foreground: 255 255 255;
-    --sidebar-accent: var(--primary-8);
+    --sidebar-primary: 168 180 216;
+    --sidebar-primary-foreground: 24 33 66;
+    --sidebar-accent: 49 60 102;
     --sidebar-accent-foreground: var(--neutral-2);
-    --sidebar-border: 255 255 255 / 10%;
-    --sidebar-ring: var(--primary-5);
-    --chart-1: var(--primary-5);
-    --chart-2: var(--secondary-4);
+    --sidebar-border: var(--neutral-6);
+    --sidebar-ring: 196 207 236;
+    --chart-1: 168 180 216;
+    --chart-2: var(--secondary-5);
     --chart-3: var(--success-2);
     --chart-4: var(--information-2);
     --chart-5: var(--neutral-7);
@@ -213,7 +229,7 @@
   }
 
   html.dark body {
-    filter: brightness(0.86);
+    filter: brightness(1);
   }
 
   code,
@@ -238,22 +254,25 @@
 
 /* ---- Syntax highlight tokens ---- */
 .token-keyword {
-  color: rgb(var(--secondary));
+  /* Prominent tokens (e.g. POST, Bearer) */
+  color: rgb(var(--neutral-3));
 }
 .token-string {
-  color: rgb(var(--primary-3));
+  /* Quoted values */
+  color: rgb(var(--neutral-4));
 }
 .token-comment {
-  color: rgb(var(--neutral-7));
+  color: rgb(var(--neutral-8));
 }
 .token-number {
-  color: rgb(var(--information-3));
+  color: rgb(var(--neutral-4));
 }
 .token-key {
-  color: rgb(var(--primary-4));
+  /* Non-special tokens (rest of line) */
+  color: rgb(var(--neutral-3));
 }
 .token-value {
-  color: rgb(var(--secondary-3));
+  color: rgb(var(--neutral-4));
 }
 
 /* ---- Fade-in animation ---- */
