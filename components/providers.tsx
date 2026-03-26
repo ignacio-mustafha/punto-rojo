@@ -4,6 +4,7 @@ import type { ReactNode } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import { ThemeProvider } from "@/components/theme-provider";
+import { AuthProvider } from "@/lib/auth-context";
 import { CountryProvider } from "@/lib/country-context";
 
 type Props = {
@@ -24,7 +25,9 @@ export function Providers({ children, forcedTheme }: Props) {
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider forcedTheme={forcedTheme}>
-        <CountryProvider>{children}</CountryProvider>
+        <AuthProvider>
+          <CountryProvider>{children}</CountryProvider>
+        </AuthProvider>
       </ThemeProvider>
     </QueryClientProvider>
   );

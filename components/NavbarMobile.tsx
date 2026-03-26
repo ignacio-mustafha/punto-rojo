@@ -15,13 +15,15 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Separator } from "@/components/ui/separator";
 import ContactFormDialog from "@/components/ContactFormDialog";
+import LoginDialog from "@/components/LoginDialog";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { COUNTRIES, LOCALES, useNavbar } from "@/hooks/useNavbar";
+import { LOCALES, useNavbar } from "@/hooks/useNavbar";
+import { useAuth } from "@/lib/auth-context";
 import { useMobileMenu } from "@/lib/mobile-menu-context";
 
 export default function NavbarMobile() {
   const t = useTranslations("nav");
-  const { country, buildPath, handleCountryChange } = useNavbar();
+  const { country, countries, buildPath, handleCountryChange } = useNavbar();
   const { openMenu } = useMobileMenu();
 
   return (
@@ -51,13 +53,13 @@ export default function NavbarMobile() {
               size="sm"
               className="h-8 gap-1 border-border bg-muted px-2 text-[11px] text-muted-foreground hover:bg-accent"
             >
-              <span>{COUNTRIES.find((c) => c.code === country)?.flag}</span>
+              <span>{countries.find((c) => c.code === country)?.flag}</span>
               <span>{country}</span>
               <ChevronDown size={11} />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-44">
-            {COUNTRIES.map((c) => {
+            {countries.map((c) => {
               const active = country === c.code;
               return (
                 <DropdownMenuItem
@@ -85,6 +87,7 @@ export default function NavbarMobile() {
 
 export function NavbarMobileDrawer() {
   const t = useTranslations("nav");
+  const { user, isAuthenticated, logout } = useAuth();
   const { open, closeMenu } = useMobileMenu();
   const { locale, buildPath, isActive, handleLocaleChange } = useNavbar();
 
@@ -186,13 +189,40 @@ export function NavbarMobileDrawer() {
                 </div>
               </div>
 
-              <ContactFormDialog
-                trigger={
-                  <Button variant="outline" size="sm" className="h-8 w-full text-xs font-bold">
-                    {t("contactCta")}
+              {!isAuthenticated ? (
+                <ContactFormDialog
+                  trigger={
+                    <Button variant="outline" size="sm" className="h-8 w-full text-xs font-bold">
+                      {t("contactCta")}
+                    </Button>
+                  }
+                />
+              ) : null}
+
+              {isAuthenticated ? (
+                <div className="space-y-2">
+                  <p className="truncate text-xs text-muted-foreground">{user?.email}</p>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="h-8 w-full text-xs font-bold"
+                    onClick={async () => {
+                      await logout();
+                      closeMenu();
+                    }}
+                  >
+                    Logout
                   </Button>
-                }
-              />
+                </div>
+              ) : (
+                <LoginDialog
+                  trigger={
+                    <Button variant="outline" size="sm" className="h-8 w-full text-xs font-bold">
+                      Login
+                    </Button>
+                  }
+                />
+              )}
             </div>
           </motion.aside>
         </motion.div>

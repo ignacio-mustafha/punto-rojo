@@ -1,7 +1,9 @@
-﻿"use client";
+"use client";
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useEffect } from "react";
 
+import { useAuth } from "@/lib/auth-context";
 import { useCountry, type CountryCode } from "@/lib/country-context";
 
 export const COUNTRIES = [
@@ -22,19 +24,31 @@ export const LOCALES = [
 
 export function useNavbar() {
   const { country, setCountry } = useCountry();
+  const { isAuthenticated, user } = useAuth();
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const router = useRouter();
 
   const segments = pathname?.split("/").filter(Boolean) ?? [];
   const locale = (segments[0] as string | undefined) || "es";
+  const countries = isAuthenticated
+    ? COUNTRIES.filter((entry) => user?.allowedCountries.includes(entry.code))
+    : COUNTRIES;
+  const defaultCountry = countries[0]?.code ?? "CO";
+  const selectedCountry = countries.some((entry) => entry.code === country) ? country : defaultCountry;
+
+  useEffect(() => {
+    if (selectedCountry !== country) {
+      setCountry(selectedCountry);
+    }
+  }, [country, selectedCountry, setCountry]);
 
   const buildPath = (path: string) => {
     const base = path === "/" ? "" : path;
     let url = `/${locale}${base}`;
 
     const params = new URLSearchParams(searchParams?.toString() ?? "");
-    if (country) params.set("country", country);
+    if (selectedCountry) params.set("country", selectedCountry);
 
     const query = params.toString();
     if (query) url += `?${query}`;
@@ -49,6 +63,8 @@ export function useNavbar() {
   };
 
   const handleCountryChange = (code: CountryCode) => {
+    if (!countries.some((entry) => entry.code === code)) return;
+
     setCountry(code);
     if (!pathname) return;
 
@@ -80,7 +96,8 @@ export function useNavbar() {
   };
 
   return {
-    country,
+    country: selectedCountry,
+    countries,
     locale,
     buildPath,
     isActive,
